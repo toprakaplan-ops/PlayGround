@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#101a27" />
+  <title>Neon Devriye — Busan Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"}}
+  </script>
+</head>
+<body>
+  <main id="game">
+    <canvas id="scene" aria-label="Busan sahilinde 3 boyutlu açık dünya polis oyunu"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">✦</div><div><b>NEON DEVRİYE</b><span>BUSAN STORIES · 01</span></div></div>
+      <div class="location"><span class="live-dot"></span><div><b id="district">GWANGALLI SAHİLİ</b><small id="clock">17:42 · AKŞAM VARDİYASI</small></div></div>
+      <button class="icon-btn map-btn" id="mapToggle" title="Harita">⌖</button>
+      <div class="cash"><span>₩</span><strong>∞</strong><small>sonsuz bütçe</small></div>
+      <button class="icon-btn pause-btn" id="pauseBtn" title="Duraklat">Ⅱ</button>
+    </header>
+
+    <section class="mission-card glass">
+      <div class="mission-icon">✧</div><div class="mission-copy"><small>AKTİF GÖREV <span class="mission-dot"></span></small><b id="missionTitle">Sahil devriyesi</b><span id="missionText">Sahil yolunu kontrol et · 0 / 3</span></div>
+      <div class="mission-progress"><div id="missionBar"></div></div>
+    </section>
+
+    <section class="status-card glass">
+      <div class="avatar-mini">👮🏻‍♀️</div><div class="status-name"><b>YUNA PARK</b><small>KIYI GÜVENLİK · MEMUR</small></div>
+      <div class="stat-row"><div class="stat-head"><span>DUYGU</span><b id="moodValue">78%</b></div><div class="meter"><i id="moodBar" class="mood"></i></div></div>
+      <div class="stat-row shoe-stat"><div class="stat-head"><span>AYAKKABI</span><b id="shoeValue">SAĞLAM</b></div><div class="meter"><i id="shoeBar" class="shoe"></i></div></div>
+      <div class="status-tags"><span id="shoeTag">✦ Siyah babet</span><span id="outfitTag">Beyaz gömlek</span></div>
+    </section>
+
+    <section class="objective glass" id="objective"><span class="objective-symbol">✦</span><span><b>Devriye sürüyor</b><small>Yakındaki bir olay için <kbd>E</kbd> tuşuna bas</small></span><i class="objective-close">×</i></section>
+    <div class="event-toast" id="toast"></div>
+    <div class="interaction" id="interaction"><span class="keycap">E</span><span id="interactionText">Etkileşim</span></div>
+
+    <div class="right-actions">
+      <button class="action-btn radio" id="radioBtn"><span>◉</span><small>DESTEK</small></button>
+      <button class="action-btn duty" id="dutyBtn"><span>✦</span><small>GÖREV</small></button>
+    </div>
+    <div class="bottom-left"><div class="compass"><span>N</span><i></i></div><div class="area-label"><b>BUSAN</b><span>GÜNEY KORE · 釜山</span></div></div>
+    <div class="bottom-center"><div class="control-hint"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>HAREKET</span><kbd>SHIFT</kbd><span>KOŞ</span></div></div>
+    <div class="bottom-right"><button id="wardrobeBtn" class="wardrobe-btn"><span>♢</span><div><b>STİL DÜKKÂNI</b><small>36+ model · sonsuz bütçe</small></div><kbd>B</kbd></button></div>
+    <div class="mobile-controls" id="mobileControls"><div class="joystick" id="joystick"><div class="joy-knob"></div></div><button id="mobileAction">E<br><small>ETKİLEŞ</small></button><button id="mobileRun">⇧<small>KOŞ</small></button></div>
+
+    <aside class="panel wardrobe-panel" id="wardrobePanel">
+      <div class="panel-head"><div><small>BUSAN STYLE ATELIER</small><h2>Stil dükkânı</h2><p>Vardiyan için küçük bir değişiklik. Her şey ücretsiz.</p></div><button class="close-btn" data-close>×</button></div>
+      <div class="category-tabs"><button class="active" data-category="heels">Topuklular <span>36</span></button><button data-category="flats">Babetler <span>8</span></button><button data-category="tights">Külotlu çorap <span>12</span></button><button data-category="shirts">Gömlekler <span>4</span></button></div>
+      <div class="shop-body"><div class="item-grid" id="itemGrid"></div><div class="fitting-room"><div class="fit-glow"></div><div class="fit-person">👮🏻‍♀️</div><span>BUGÜNKÜ GÖRÜNÜMÜN</span><b id="fitName">Klasik siyah babet</b><small>Üniforma · beyaz gömlek · görev kemeri</small><div class="fit-note">✦ Rahat ayakkabı, uzun devriyenin en iyi dostu.</div><button id="wearButton" class="primary-btn">GİYİYORUM <span>→</span></button></div></div>
+      <div class="panel-foot"><span>✦ Tüm ürünler oyun içi bütçeyle alınabilir</span><span id="ownedCount">Koleksiyonun: 1 parça</span></div>
+    </aside>
+
+    <aside class="panel map-panel" id="mapPanel"><div class="panel-head"><div><small>ŞEHİR REHBERİ</small><h2>Busan sahil hattı</h2></div><button class="close-btn" data-close>×</button></div><div class="map-illustration"><div class="map-sea">GWANGALLI<br><small>바다 · DENİZ</small></div><div class="map-road"></div><div class="map-block block-one">SAHİL<br>YOLU</div><div class="map-block block-two">ATELIER<br>STİL</div><div class="map-block block-three">MARİNA<br>MEYDANI</div><div class="map-pin">✦<small>YUNА</small></div><span class="map-north">N ↑</span></div><div class="map-legend"><span>✦ Sen</span><span>○ Sivil</span><span>! Olay noktası</span><span>♢ Stil dükkânı</span></div><button class="primary-btn map-close" data-close>DEVAM ET <span>→</span></button></aside>
+
+    <div class="start-screen" id="startScreen"><div class="start-backdrop"></div><div class="start-copy"><div class="start-logo"><span>✦</span> BUSAN · 釜山</div><p class="eyebrow">AÇIK DÜNYA · SAHİLDE BİR VARDİYA</p><h1>Şehrin ritmi,<br><em>senin devriyen.</em></h1><p class="intro">Gün batımında Busan sokakları. İnsanlara yardım et, küçük olayları çöz ve kendi tarzınla devriye gez. Bu şehirde her köşede yeni bir hikâye var.</p><div class="start-meta"><span>✦ 3D AÇIK DÜNYA</span><span>♡ DUYGU SİSTEMİ</span><span>♢ 60+ STİL</span></div><button id="startBtn" class="primary-btn start-btn">VARDİYAYA BAŞLA <span>→</span></button><small class="start-controls">WASD ile yürü · E ile etkileş · B ile stilini değiştir</small></div><div class="start-art"><div class="sun-orb"></div><div class="start-city">BUSAN</div><div class="start-person">👮🏻‍♀️</div><div class="start-caption">GWANGALLI BEACH<br><span>35°09' N · 129°07' E</span></div></div><div class="start-bottom">NEON DEVRİYE <span>© BUSAN STORIES · 2025</span></div></div>
+
+    <div class="pause-screen hidden" id="pauseScreen"><div class="pause-box"><span class="pause-star">✦</span><small>BUSAN · VARDİYA 01</small><h2>Bir nefes al.</h2><p>Şehir seni bekliyor.</p><button class="primary-btn" id="resumeBtn">DEVAM ET <span>→</span></button><button class="text-btn" id="restartBtn">Vardiyayı baştan başlat</button></div></div>
+    <div class="cry-overlay" id="cryOverlay"><div>🥺</div><span>Biraz fazla oldu… derin bir nefes alalım.</span></div>
+  </main>
+  <script type="module" src="game.js"></script>
+</body>
+</html>

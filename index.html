@@ -11,6 +11,16 @@
     <div class="app-shell">
       <canvas id="gameCanvas" width="1200" height="720" aria-label="Şehir devriyesi oyunu"></canvas>
 
+      <div class="mobile-controls" aria-label="Dokunmatik oyun kontrolleri">
+        <div class="direction-pad" aria-label="Hareket kontrolleri">
+          <button class="control-button direction-button up-button" type="button" data-key="arrowup" aria-label="Yukarı git">▲</button>
+          <button class="control-button direction-button left-button" type="button" data-key="arrowleft" aria-label="Sola git">◀</button>
+          <button class="control-button direction-button right-button" type="button" data-key="arrowright" aria-label="Sağa git">▶</button>
+          <button class="control-button direction-button down-button" type="button" data-key="arrowdown" aria-label="Aşağı git">▼</button>
+        </div>
+        <button id="interactBtn" class="control-button interact-button" type="button" aria-label="Etkileşim kur">Etkileşim</button>
+      </div>
+
       <div class="hud">
         <div class="top-bar">
           <div class="pill">

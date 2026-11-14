@@ -183,6 +183,10 @@ body {
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.25);
 }
 
+.mobile-controls {
+  display: none;
+}
+
 .hidden {
   display: none !important;
 }
@@ -204,33 +208,164 @@ body {
   box-shadow: 0 10px 28px rgba(100, 180, 255, 0.5);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 720px), (pointer: coarse) {
+  html, body {
+    height: 100%;
+    height: 100dvh;
+    overscroll-behavior: none;
+  }
+
   .app-shell {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
+    border: 0;
     border-radius: 0;
+    touch-action: none;
   }
 
   .hud {
-    top: 12px;
-    left: 12px;
-    right: 12px;
+    top: max(8px, env(safe-area-inset-top));
+    left: 8px;
+    right: 8px;
+    gap: 6px;
   }
 
   .top-bar {
-    gap: 8px;
+    gap: 5px;
   }
 
   .pill {
-    padding: 7px 10px;
+    gap: 5px;
+    padding: 6px 9px;
+  }
+
+  .pill .label {
+    font-size: 10px;
+  }
+
+  .pill strong {
+    font-size: 12px;
   }
 
   .status-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
     max-width: 100%;
   }
 
-  .mission-log {
-    width: min(100%, 240px);
+  .meter-wrap {
+    padding: 7px 8px 6px;
   }
+
+  .meter-label-row {
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
+
+  .meter {
+    height: 8px;
+  }
+
+  .mission-log {
+    width: min(100%, 260px);
+    padding: 8px 10px;
+  }
+
+  .mission-log p {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .mobile-controls {
+    position: absolute;
+    z-index: 4;
+    inset: auto 0 max(12px, env(safe-area-inset-bottom));
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 18px;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .direction-pad {
+    position: relative;
+    width: 166px;
+    height: 166px;
+    pointer-events: none;
+  }
+
+  .control-button {
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(210, 235, 255, 0.48);
+    color: #f3f8ff;
+    background: rgba(15, 31, 48, 0.76);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.32), inset 0 1px rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(6px);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: none;
+    pointer-events: auto;
+  }
+
+  .direction-button {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    font-size: 20px;
+  }
+
+  .direction-button:active,
+  .interact-button:active {
+    background: rgba(65, 139, 184, 0.9);
+    transform: scale(0.96);
+  }
+
+  .up-button { top: 0; left: 56px; }
+  .left-button { top: 56px; left: 0; }
+  .right-button { top: 56px; right: 0; }
+  .down-button { bottom: 0; left: 56px; }
+
+  .interact-button {
+    min-width: 94px;
+    min-height: 58px;
+    margin-bottom: 12px;
+    border-radius: 20px;
+    padding: 0 14px;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .message-box {
+    z-index: 3;
+    bottom: 190px;
+    min-width: 0;
+    width: calc(100% - 32px);
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .restart {
+    z-index: 5;
+    bottom: 185px;
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .mobile-controls { padding: 0 12px; }
+  .direction-pad { transform: scale(0.88); transform-origin: bottom left; }
+  .interact-button { min-width: 82px; padding: 0 10px; }
+}
+
+@media (max-height: 500px) and (max-width: 900px) {
+  .mobile-controls { padding: 0 14px; }
+  .direction-pad { transform: scale(0.72); transform-origin: bottom left; }
+  .interact-button { min-height: 48px; margin-bottom: 4px; }
+  .mission-log { display: none; }
+  .message-box { bottom: 110px; }
+  .restart { bottom: 110px; }
 }

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0716" />
+<title>Seoul Beat — Gece Devriyesi</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👮‍♀️</text></svg>" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div id="app">
+  <canvas id="scene" aria-label="Seoul Beat oyun alanı"></canvas>
+  <div class="vignette"></div>
+  <div class="scanlines"></div>
+
+  <!-- HUD -->
+  <header id="hud" class="hud hidden">
+    <div class="hud-left">
+      <div class="brand">
+        <span class="brand-mark">SB</span>
+        <span class="brand-text">SEOUL BEAT<small>GECE DEVRİYESİ</small></span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">SKOR</span>
+        <span class="stat-value" id="score">0</span>
+      </div>
+    </div>
+
+    <div class="hud-center">
+      <div class="timer-label"><span>SÜRE</span><span id="timerValue">100</span><small>sn</small></div>
+      <div class="timer-track"><div class="timer-fill" id="timerFill"></div><div class="timer-glow" id="timerGlow"></div></div>
+      <div class="combo" id="combo"><span id="comboText">KOMBO ×1</span><i></i></div>
+    </div>
+
+    <div class="hud-right">
+      <div class="hearts" id="hearts" aria-label="kalan kalp">
+        <span class="heart">♥</span><span class="heart">♥</span><span class="heart">♥</span>
+      </div>
+      <button id="muteBtn" class="icon-btn" aria-label="Sesi aç/kapat" title="Ses (M)">
+        <svg viewBox="0 0 24 24" class="ico-on"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zm-2.5-8v2.1a6.5 6.5 0 0 1 0 11.8V20a8.5 8.5 0 0 0 0-16z"/></svg>
+        <svg viewBox="0 0 24 24" class="ico-off"><path d="M4 9v6h4l5 4V5L8 9H4zm14.6 3 2.4 2.4-1.4 1.4-2.4-2.4-2.4 2.4-1.4-1.4L15.8 12l-2.4-2.4 1.4-1.4 2.4 2.4 2.4-2.4 1.4 1.4L16.6 12z"/></svg>
+      </button>
+      <button id="pauseBtn" class="icon-btn" aria-label="Duraklat" title="Duraklat (P)">
+        <svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- minimap -->
+  <aside id="minimapWrap" class="minimap-wrap hidden">
+    <div class="map-head"><span class="dot"></span> SEONGSU-DONG <small>CANLI</small></div>
+    <canvas id="minimap" width="300" height="236"></canvas>
+    <div class="map-legend"><span class="lg you"></span>SEN <span class="lg thief"></span>HIRSIZ <span class="lg loot"></span>İPUCU</div>
+  </aside>
+
+  <!-- desktop hints -->
+  <div id="hints" class="hints hidden">
+    <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> HAREKET</span>
+    <span><kbd>SPACE</kbd> DARBE</span>
+    <span><kbd>P</kbd> MOLA</span>
+  </div>
+
+  <!-- action button -->
+  <button id="dashBtn" class="dash-btn hidden" aria-label="Darbe yap">
+    <span class="dash-ring" id="dashRing"></span>
+    <span class="dash-inner"><b>DARBE</b><small>SPACE</small></span>
+  </button>
+
+  <!-- mobile joystick -->
+  <div id="stick" class="stick hidden">
+    <div class="stick-base"></div>
+    <div class="stick-knob"></div>
+    <span class="stick-label">HAREKET</span>
+  </div>
+
+  <div id="banner" class="banner"></div>
+  <div id="toasts" class="toasts"></div>
+
+  <!-- START SCREEN -->
+  <section id="menu" class="overlay menu">
+    <div class="menu-shade"></div>
+    <div class="menu-card">
+      <div class="menu-eyebrow"><span class="live-dot"></span> SEOUL • 23:48 • GECE DEVRİYESİ</div>
+      <h1 class="title">
+        <span class="title-top">SEOUL</span>
+        <span class="title-bottom">BEAT</span>
+      </h1>
+      <p class="title-kr">서울 야간 순찰</p>
+      <p class="menu-lead">Seul sokakları karıştı. Çanta hırsızları kaçıyor —
+        <b>Ofiser Yuna</b> geceyi temizlemek için sahada.</p>
+      <ul class="menu-rules">
+        <li><b>Hırsızları yakala</b> — darbe ile mesafeyi kapat.</li>
+        <li><b>Kombo yap</b> — üst üste yakaladıkça puan katlanır.</li>
+        <li><b>3 kalbini koru</b> — kaçan her hırsız bir kalp götürür.</li>
+      </ul>
+      <button id="startBtn" class="start-btn">
+        <span>DEVRİYEYE BAŞLA</span>
+        <svg viewBox="0 0 24 24"><path d="M8 5l9 7-9 7V5z"/></svg>
+      </button>
+      <div class="menu-foot">
+        <span class="best">REKOR <b id="bestScore">0</b></span>
+        <button id="soundToggle" class="sound-toggle" aria-label="Ses">SES: AÇIK</button>
+      </div>
+    </div>
+
+    <div class="officer-tag">
+      <span class="tag-line"></span>
+      <div>
+        <small>DEVRİYEDE</small>
+        <strong>OFİSER YUNA</strong>
+        <em>SEOUL METRO POLİSİ • BİRİM 07</em>
+      </div>
+    </div>
+
+    <div class="menu-controls">
+      <span class="mc-title">KONTROLLER</span>
+      <span><kbd>WASD</kbd> hareket</span>
+      <span><kbd>SPACE</kbd> darbe</span>
+      <span class="touch-only"><b>Sol yarı</b> joystick</span>
+      <span class="touch-only"><b>DARBE</b> butonu</span>
+    </div>
+  </section>
+
+  <!-- PAUSE -->
+  <section id="pause" class="overlay modal hidden">
+    <div class="modal-card">
+      <div class="modal-kicker">VARDİYA DURAKLATILDI</div>
+      <h2>MOLA</h2>
+      <p>Seul seni bekliyor, ofiser.</p>
+      <button id="resumeBtn" class="start-btn small"><span>DEVAM ET</span></button>
+      <button id="restartBtn" class="ghost-btn">YENİDEN BAŞLAT</button>
+    </div>
+  </section>
+
+  <!-- GAME OVER -->
+  <section id="gameover" class="overlay modal hidden">
+    <div class="modal-card gameover-card">
+      <div class="modal-kicker" id="goKicker">VARDİYA BİTTİ</div>
+      <h2 id="goTitle">İYİ İŞ, OFİSER</h2>
+      <div class="result-score"><small>SKOR</small><b id="finalScore">0</b></div>
+      <div class="result-grid">
+        <div><small>YAKALANAN</small><b id="finalCaught">0</b></div>
+        <div><small>EN İYİ KOMBO</small><b id="finalCombo">×1</b></div>
+        <div><small>REKOR</small><b id="finalBest">0</b></div>
+      </div>
+      <p id="goRank" class="go-rank"></p>
+      <button id="againBtn" class="start-btn"><span>TEKRAR OYNA</span><svg viewBox="0 0 24 24"><path d="M8 5l9 7-9 7V5z"/></svg></button>
+      <button id="menuBtn" class="ghost-btn">ANA MENÜ</button>
+    </div>
+  </section>
+
+  <div id="loading" class="overlay loading">
+    <div class="loader-badge">SB</div>
+    <div class="loader-text">SEOUL YÜKLENİYOR<span>...</span></div>
+    <div class="loader-bar"><i></i></div>
+  </div>
+
+  <div id="rotateHint" class="rotate-hint">Daha iyi deneyim için telefonunu yatay tut 📱</div>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

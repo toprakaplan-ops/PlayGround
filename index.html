@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Midnight Heels: City Patrol</title>
+    <title>Gece Topukları: Şehir Devriyesi</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="app-shell">
-      <canvas id="gameCanvas" width="1200" height="720" aria-label="City patrol game"></canvas>
+      <canvas id="gameCanvas" width="1200" height="720" aria-label="Şehir devriyesi oyunu"></canvas>
 
       <div class="hud">
         <div class="top-bar">
           <div class="pill">
-            <span class="label">Officer</span>
+            <span class="label">Polis</span>
             <strong id="officerName">Ari Park</strong>
           </div>
           <div class="pill">
-            <span class="label">Mission</span>
-            <strong id="missionText">Patrol the city</strong>
+            <span class="label">Görev</span>
+            <strong id="missionText">Şehirde devriye gez</strong>
           </div>
           <div class="pill money-pill">
-            <span class="label">Cash</span>
+            <span class="label">Para</span>
             <strong id="moneyText">∞</strong>
           </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="status-grid">
           <div class="meter-wrap">
             <div class="meter-label-row">
-              <span>Heel Integrity</span>
+              <span>Topuk Sağlamlığı</span>
               <span id="heelValue">100%</span>
             </div>
             <div class="meter">
@@ -40,7 +40,7 @@
 
           <div class="meter-wrap">
             <div class="meter-label-row">
-              <span>Energy</span>
+              <span>Enerji</span>
               <span id="energyValue">100%</span>
             </div>
             <div class="meter">
@@ -50,13 +50,13 @@
         </div>
 
         <div class="mission-log" id="missionLog">
-          <div class="log-title">Dispatch</div>
-          <p>Downtown is active. Keep the heels steady and the city safe.</p>
+          <div class="log-title">Merkez</div>
+          <p>Şehir merkezinde hareketlilik var. Topuklarını sağlam tut, şehri güvende tut.</p>
         </div>
       </div>
 
       <div id="messageBox" class="message-box hidden"></div>
-      <button id="restartBtn" class="restart hidden" type="button">Restart Shift</button>
+      <button id="restartBtn" class="restart hidden" type="button">Vardiyayı Yeniden Başlat</button>
     </div>
 
     <script src="game.js"></script>

@@ -35,19 +35,19 @@ const buildingRects = [
 const shop = { x: 1080, y: 550, radius: 90 };
 
 const suspectSpawns = [
-  { x: 490, y: 510, radius: 18, name: 'Rooftop thief' },
-  { x: 1520, y: 420, radius: 18, name: 'Stolen bike gang' },
-  { x: 980, y: 1480, radius: 18, name: 'Counterfeit ring' },
-  { x: 1820, y: 990, radius: 18, name: 'Bodega arson' },
-  { x: 650, y: 1800, radius: 18, name: 'Extortion crew' }
+  { x: 490, y: 510, radius: 18, name: 'Çatı hırsızı' },
+  { x: 1520, y: 420, radius: 18, name: 'Bisiklet hırsızları çetesi' },
+  { x: 980, y: 1480, radius: 18, name: 'Sahte yüzük çetesi' },
+  { x: 1820, y: 990, radius: 18, name: 'Bakkal kundakçısı' },
+  { x: 650, y: 1800, radius: 18, name: 'Gasp çetesi' }
 ];
 
 const evidenceSpawns = [
-  { x: 340, y: 930, radius: 14, type: 'cash trace' },
-  { x: 820, y: 470, radius: 14, type: 'phone signal' },
-  { x: 1490, y: 1010, radius: 14, type: 'lockpick kit' },
-  { x: 1810, y: 1650, radius: 14, type: 'stolen invoice' },
-  { x: 1120, y: 1950, radius: 14, type: 'tracked bag' }
+  { x: 340, y: 930, radius: 14, type: 'para izi' },
+  { x: 820, y: 470, radius: 14, type: 'telefon sinyali' },
+  { x: 1490, y: 1010, radius: 14, type: 'maymuncuk takımı' },
+  { x: 1810, y: 1650, radius: 14, type: 'çalınmış fatura' },
+  { x: 1120, y: 1950, radius: 14, type: 'takip cihazlı çanta' }
 ];
 
 const game = {
@@ -61,7 +61,7 @@ const game = {
   objectivesCleared: 0,
   currentMessage: '',
   messageTimer: 0,
-  missionState: 'Patrol the city'
+  missionState: 'Şehirde devriye gez'
 };
 
 const player = {
@@ -74,13 +74,13 @@ const player = {
   direction: 0,
   invulnerable: 0,
   canMove: true,
-  attire: 'Black heels'
+  attire: 'Siyah topuklu ayakkabılar'
 };
 
 const worldState = {
   suspects: suspectSpawns.map((item) => ({ ...item, captured: false })),
   evidence: evidenceSpawns.map((item) => ({ ...item, collected: false })),
-  objectiveText: 'Escort the petition run and check all hotspots.'
+  objectiveText: 'Dilekçe konvoyuna eşlik et ve tüm olay noktalarını kontrol et.'
 };
 
 const camera = { x: 0, y: 0 };
@@ -114,9 +114,9 @@ function resetGame() {
   restartBtn.classList.add('hidden');
   worldState.suspects = suspectSpawns.map((item) => ({ ...item, captured: false }));
   worldState.evidence = evidenceSpawns.map((item) => ({ ...item, collected: false }));
-  updateMissionText('Patrol the city');
-  updateLog('Downtown is active. Keep the heels steady and the city safe.');
-  setMessage('Shift started. Keep moving.');
+  updateMissionText('Şehirde devriye gez');
+  updateLog('Şehir merkezinde hareketlilik var. Topuklarını sağlam tut, şehri güvende tut.');
+  setMessage('Vardiya başladı. Harekete geç.');
 }
 
 function clamp(value, min, max) {
@@ -138,7 +138,7 @@ function updateMissionText(text) {
 }
 
 function updateLog(text) {
-  missionLog.innerHTML = `<div class="log-title">Dispatch</div><p>${text}</p>`;
+  missionLog.innerHTML = `<div class="log-title">Merkez</div><p>${text}</p>`;
 }
 
 function handleInteraction() {
@@ -146,12 +146,12 @@ function handleInteraction() {
     if (player.heelIntegrity < 100 || player.energy < 100) {
       player.heelIntegrity = 100;
       player.energy = 100;
-      setMessage('New heels fitted. Officer back in motion.');
-      updateLog('Shoe store restocked. Heel replacement completed before the next alert.');
+      setMessage('Yeni topuklu ayakkabılarını giydin. Devriyeye hazırsın.');
+      updateLog('Ayakkabı mağazası stoklarını yeniledi. Yeni bir ihbar gelmeden topukların değiştirildi.');
       return;
     }
 
-    setMessage('Heels and energy already at full strength.');
+    setMessage('Topukların ve enerjin zaten tamamen dolu.');
     return;
   }
 
@@ -159,16 +159,16 @@ function handleInteraction() {
   if (suspect) {
     suspect.captured = true;
     game.objectivesCleared += 1;
-    setMessage(`Suspect caught: ${suspect.name}.`);
-    updateLog(`Suspect neutralized: ${suspect.name}. Patrol route is holding.`);
+    setMessage(`Şüpheli yakalandı: ${suspect.name}.`);
+    updateLog(`${suspect.name} etkisiz hâle getirildi. Devriye güzergâhı güvende.`);
     checkCompletion();
   }
 
   const evidence = worldState.evidence.find((e) => !e.collected && distance(player.x, player.y, e.x, e.y) < 34);
   if (evidence) {
     evidence.collected = true;
-    setMessage(`Evidence secured: ${evidence.type}.`);
-    updateLog(`Recovered ${evidence.type}. Every clue strengthens the case.`);
+    setMessage(`Delil güvenceye alındı: ${evidence.type}.`);
+    updateLog(`${evidence.type} bulundu. Her ipucu davayı güçlendiriyor.`);
     checkCompletion();
   }
 }
@@ -178,9 +178,9 @@ function checkCompletion() {
   const allEvidenceCollected = worldState.evidence.every((e) => e.collected);
 
   if (allSuspectsCaught && allEvidenceCollected) {
-    updateMissionText('Shift complete');
-    updateLog('City secured. All suspects are accounted for and the evidence trail is closed.');
-    setMessage('Mission complete. The city is safe tonight.');
+    updateMissionText('Vardiya tamamlandı');
+    updateLog('Şehir güvence altında. Tüm şüpheliler yakalandı ve delil zinciri tamamlandı.');
+    setMessage('Görev tamamlandı. Bu gece şehir güvende.');
     game.active = false;
     restartBtn.classList.remove('hidden');
   }
@@ -235,8 +235,8 @@ function updatePlayer(dt) {
   if (player.heelIntegrity <= 0) {
     // Keep a slow limp available so a broken heel never soft-locks the shift.
     player.canMove = true;
-    setMessage('Heels damaged. Head to the shoe shop to repair them.');
-    updateLog('The left heel snapped. Shop repair is required before continuing the chase.');
+    setMessage('Topukların hasar gördü. Onarmak için ayakkabı mağazasına git.');
+    updateLog('Sol topuğun kırıldı. Takibe devam etmek için mağazada onarım gerekiyor.');
   }
 
   if (player.energy <= 0) {
@@ -428,7 +428,7 @@ function drawHudEffects() {
     ctx.fill();
     ctx.fillStyle = '#99ffeb';
     ctx.font = '18px sans-serif';
-    ctx.fillText('Press E to repair heels', shop.x - camera.x - 85, shop.y - camera.y - 95);
+    ctx.fillText('Onarmak için E tuşuna bas', shop.x - camera.x - 85, shop.y - camera.y - 95);
   }
 }
 

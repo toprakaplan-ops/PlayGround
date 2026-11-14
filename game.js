@@ -10,9 +10,26 @@ const energyBar = document.getElementById('energyBar');
 const moneyText = document.getElementById('moneyText');
 const messageBox = document.getElementById('messageBox');
 const restartBtn = document.getElementById('restartBtn');
+const interactBtn = document.getElementById('interactBtn');
 
 const world = { width: 2200, height: 2200 };
 const keys = {};
+const activePointers = new Map();
+let viewportWidth = 1200;
+let viewportHeight = 720;
+
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+  viewportWidth = rect.width;
+  viewportHeight = rect.height;
+  canvas.width = Math.round(rect.width * pixelRatio);
+  canvas.height = Math.round(rect.height * pixelRatio);
+  ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 const markerRadius = 30;
 const buildingRects = [
   { x: 300, y: 230, w: 280, h: 180, color: '#1d3557' },
@@ -98,6 +115,46 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('keyup', (event) => {
   keys[event.key.toLowerCase()] = false;
+});
+
+function clearTouchInputs() {
+  for (const key of activePointers.values()) keys[key] = false;
+  activePointers.clear();
+}
+
+document.querySelectorAll('.direction-button').forEach((button) => {
+  button.addEventListener('pointerdown', (event) => {
+    event.preventDefault();
+    const key = button.dataset.key;
+    activePointers.set(event.pointerId, key);
+    keys[key] = true;
+    try {
+      button.setPointerCapture(event.pointerId);
+    } catch (error) {
+      // Synthetic pointer events used by tests do not have a capturable pointer.
+    }
+  });
+
+  const release = (event) => {
+    const key = activePointers.get(event.pointerId);
+    if (!key) return;
+    keys[key] = false;
+    activePointers.delete(event.pointerId);
+  };
+
+  button.addEventListener('pointerup', release);
+  button.addEventListener('pointercancel', release);
+  button.addEventListener('lostpointercapture', release);
+});
+
+interactBtn.addEventListener('pointerdown', (event) => {
+  event.preventDefault();
+  handleInteraction();
+});
+
+window.addEventListener('blur', clearTouchInputs);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) clearTouchInputs();
 });
 
 function resetGame() {
@@ -256,15 +313,13 @@ function updatePlayer(dt) {
 }
 
 function updateCamera() {
-  const viewportWidth = canvas.width;
-  const viewportHeight = canvas.height;
   camera.x = clamp(player.x - viewportWidth / 2, 0, world.width - viewportWidth);
   camera.y = clamp(player.y - viewportHeight / 2, 0, world.height - viewportHeight);
 }
 
 function drawBackground() {
   ctx.fillStyle = '#0b1720';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, viewportWidth, viewportHeight);
 
   ctx.save();
   ctx.translate(-camera.x, -camera.y);
@@ -428,7 +483,7 @@ function drawHudEffects() {
     ctx.fill();
     ctx.fillStyle = '#99ffeb';
     ctx.font = '18px sans-serif';
-    ctx.fillText('Onarmak için E tuşuna bas', shop.x - camera.x - 85, shop.y - camera.y - 95);
+    ctx.fillText("Onarmak için Etkileşim'e bas (E)", shop.x - camera.x - 120, shop.y - camera.y - 95);
   }
 }
 

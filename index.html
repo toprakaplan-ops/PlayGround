@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Midnight Heels: City Patrol</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <canvas id="gameCanvas" width="1200" height="720" aria-label="City patrol game"></canvas>
+
+      <div class="hud">
+        <div class="top-bar">
+          <div class="pill">
+            <span class="label">Officer</span>
+            <strong id="officerName">Ari Park</strong>
+          </div>
+          <div class="pill">
+            <span class="label">Mission</span>
+            <strong id="missionText">Patrol the city</strong>
+          </div>
+          <div class="pill money-pill">
+            <span class="label">Cash</span>
+            <strong id="moneyText">∞</strong>
+          </div>
+        </div>
+
+        <div class="status-grid">
+          <div class="meter-wrap">
+            <div class="meter-label-row">
+              <span>Heel Integrity</span>
+              <span id="heelValue">100%</span>
+            </div>
+            <div class="meter">
+              <div id="heelBar" class="meter-fill heel-fill"></div>
+            </div>
+          </div>
+
+          <div class="meter-wrap">
+            <div class="meter-label-row">
+              <span>Energy</span>
+              <span id="energyValue">100%</span>
+            </div>
+            <div class="meter">
+              <div id="energyBar" class="meter-fill energy-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mission-log" id="missionLog">
+          <div class="log-title">Dispatch</div>
+          <p>Downtown is active. Keep the heels steady and the city safe.</p>
+        </div>
+      </div>
+
+      <div id="messageBox" class="message-box hidden"></div>
+      <button id="restartBtn" class="restart hidden" type="button">Restart Shift</button>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>

@@ -1,0 +1,236 @@
+:root {
+  --bg1: #071421;
+  --bg2: #101c2a;
+  --panel: rgba(10, 18, 29, 0.82);
+  --panel-border: rgba(100, 160, 255, 0.42);
+  --text: #edf6ff;
+  --muted: #a7bbd6;
+  --accent: #64d9ff;
+  --accent2: #ff8fbf;
+  --success: #8bf4b1;
+  --danger: #ff7a7a;
+  --warning: #f7d78d;
+  --heel: #d67cff;
+  --shop: #00d1b7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #1b2b37 0%, var(--bg1) 40%, #040b12 100%);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", sans-serif;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+.app-shell {
+  position: relative;
+  width: min(96vw, 1200px);
+  height: min(92vh, 720px);
+  border-radius: 24px;
+  border: 1px solid rgba(148, 177, 255, 0.26);
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(19, 28, 40, 0.84), rgba(9, 13, 21, 0.9));
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+}
+
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: linear-gradient(180deg, #0e1d2d 0%, #0a1620 100%);
+}
+
+.hud {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  padding: 8px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.pill .label {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.pill strong {
+  font-size: 15px;
+}
+
+.money-pill {
+  background: rgba(25, 61, 53, 0.72);
+  border-color: rgba(114, 255, 198, 0.5);
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 12px;
+  max-width: 500px;
+}
+
+.meter-wrap {
+  padding: 10px 12px 8px;
+  border-radius: 14px;
+  background: rgba(13, 21, 31, 0.72);
+  border: 1px solid rgba(133, 167, 237, 0.24);
+}
+
+.meter-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.meter {
+  position: relative;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  border-radius: inherit;
+  transition: width 0.18s ease;
+}
+
+.heel-fill {
+  background: linear-gradient(90deg, #ff8bd7, #d67cff, #a777ff);
+}
+
+.energy-fill {
+  background: linear-gradient(90deg, #5be7ff, #62ffc8);
+}
+
+.mission-log {
+  width: min(100%, 360px);
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(8, 17, 25, 0.74);
+  border: 1px solid rgba(129, 177, 255, 0.25);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+.log-title {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.mission-log p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+.message-box {
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%);
+  min-width: min(70vw, 480px);
+  background: rgba(12, 17, 25, 0.86);
+  border: 1px solid rgba(209, 229, 255, 0.18);
+  border-radius: 16px;
+  padding: 18px 22px;
+  font-size: 15px;
+  text-align: center;
+  color: var(--text);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.25);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.restart {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6fe2ff, #7aa2ff);
+  color: #061720;
+  padding: 12px 22px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(100, 180, 255, 0.5);
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .hud {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+  }
+
+  .top-bar {
+    gap: 8px;
+  }
+
+  .pill {
+    padding: 7px 10px;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .mission-log {
+    width: min(100%, 240px);
+  }
+}

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080b12">
+<meta name="description" content="Gece Devriyesi — Koreli kadın polis Yuna Seo'nun sonsuz gece vardiyası. Türkçe metin tabanlı oyun.">
+<title>Gece Devriyesi — Yuna Seo</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="city" aria-hidden="true">
+  <div class="city-glow city-glow-a"></div>
+  <div class="city-glow city-glow-b"></div>
+  <div class="rain"></div>
+</div>
+
+<div id="app">
+
+  <!-- ============ BAŞLIK ============ -->
+  <section id="scr-title" class="screen active">
+    <div class="title-wrap">
+      <div class="title-sign">
+        <span class="sign-kr">밤의 순찰</span>
+        <span class="sign-line"></span>
+        <span class="sign-tr">HAESONG GECE DEVRİYESİ</span>
+      </div>
+      <h1 class="logo">GECE<br><em>DEVRİYESİ</em></h1>
+      <p class="tagline">Koreli bir kadın polis. Siyah, acıtan bir tayt. Tuz kokan bir şehir. Ve her an dolabilen gözler.</p>
+      <div class="title-rules">
+        <span>SONSUZ GECE</span><i>•</i><span>34 ÇORAP</span><i>•</i><span>34 AYAKKABI</span><i>•</i><span>4 SEÇİM</span>
+      </div>
+      <div class="title-actions">
+        <button id="btnContinue" class="btn primary big">Devam Et</button>
+        <button id="btnNew" class="btn big">Yeni Gece</button>
+        <button id="btnHelp" class="btn ghost">Nasıl oynanır?</button>
+      </div>
+      <p class="title-foot">Yuna Seo • Polis Memuru • Haesong Emniyet Müdürlüğü<br><span>Her gece devriye. Her seçim başka bir sokağa.</span></p>
+    </div>
+  </section>
+
+  <!-- ============ GİRİŞ ============ -->
+  <section id="scr-intro" class="screen">
+    <header class="screen-head">
+      <div>
+        <div class="kicker">İLK GECE • 21:47</div>
+        <h2>Soyunma Odası</h2>
+      </div>
+      <button class="icon-btn" id="btnIntroSkip" aria-label="Atla">Atla</button>
+    </header>
+    <div class="scroll-area">
+      <div class="prose intro-prose" id="introText"></div>
+      <div class="intro-choices" id="introChoices"></div>
+    </div>
+  </section>
+
+  <!-- ============ OYUN ============ -->
+  <section id="scr-game" class="screen">
+    <header class="topbar">
+      <div class="night-chip"><span>GECE</span><b id="hudNight">1</b></div>
+      <div class="clock" id="hudClock">23:10</div>
+      <div class="topbar-right">
+        <div class="rank-mini" id="hudRank">Aday Memur</div>
+        <button class="icon-btn" id="btnLog" aria-label="Günlük">☰</button>
+      </div>
+    </header>
+
+    <div class="meters" id="meters">
+      <div class="meter" data-m="moral">
+        <div class="meter-top"><span>DUYGU</span><b id="mv-moral">58</b></div>
+        <div class="meter-bar"><i id="mb-moral"></i></div>
+      </div>
+      <div class="meter" data-m="energy">
+        <div class="meter-top"><span>ENERJİ</span><b id="mv-energy">100</b></div>
+        <div class="meter-bar"><i id="mb-energy"></i></div>
+      </div>
+      <div class="meter" data-m="foot">
+        <div class="meter-top"><span>AYAK</span><b id="mv-foot">88</b></div>
+        <div class="meter-bar"><i id="mb-foot"></i></div>
+      </div>
+      <div class="meter" data-m="hygiene">
+        <div class="meter-top"><span>HİJYEN</span><b id="mv-hygiene">100</b></div>
+        <div class="meter-bar"><i id="mb-hygiene"></i></div>
+      </div>
+    </div>
+
+    <div class="chips" id="chips"></div>
+
+    <main class="story" id="story" aria-live="polite">
+      <div class="event-card" id="eventCard">
+        <div class="event-kicker"><span id="evKicker">OLAY 01</span><i></i><span id="evPlace"></span></div>
+        <h2 id="evTitle">Gece başlıyor</h2>
+        <p id="evText"></p>
+        <div class="outcome" id="evOutcome"></div>
+      </div>
+      <div class="night-deco" aria-hidden="true">
+        <svg class="sky" viewBox="0 0 400 180" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#0a0f19" stop-opacity="0"/>
+              <stop offset=".55" stop-color="#0b1220"/>
+              <stop offset="1" stop-color="#070a11"/>
+            </linearGradient>
+            <linearGradient id="wetg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1a2233" stop-opacity=".85"/>
+              <stop offset="1" stop-color="#070a11" stop-opacity=".2"/>
+            </linearGradient>
+            <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="4" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="400" height="180" fill="url(#skyg)"/>
+          <g fill="#0e1522">
+            <rect x="4" y="82" width="38" height="82"/>
+            <rect x="48" y="58" width="26" height="106"/>
+            <rect x="80" y="96" width="44" height="68"/>
+            <rect x="130" y="46" width="30" height="118"/>
+            <rect x="166" y="88" width="22" height="76"/>
+            <rect x="194" y="66" width="46" height="98"/>
+            <rect x="246" y="104" width="30" height="60"/>
+            <rect x="282" y="52" width="34" height="112"/>
+            <rect x="322" y="90" width="26" height="74"/>
+            <rect x="354" y="70" width="42" height="94"/>
+          </g>
+          <g fill="#ffcc76" opacity=".5">
+            <rect x="12" y="94" width="5" height="7"/><rect x="26" y="110" width="5" height="7"/><rect x="56" y="72" width="4" height="6"/>
+            <rect x="62" y="92" width="4" height="6"/><rect x="138" y="60" width="5" height="7"/><rect x="144" y="84" width="5" height="7"/>
+            <rect x="206" y="80" width="5" height="7"/><rect x="222" y="100" width="5" height="7"/><rect x="292" y="66" width="5" height="7"/>
+            <rect x="300" y="92" width="5" height="7"/><rect x="366" y="84" width="5" height="7"/><rect x="378" y="110" width="5" height="7"/>
+          </g>
+          <g fill="#58e6cf" opacity=".55">
+            <rect x="88" y="108" width="4" height="6"/><rect x="98" y="122" width="4" height="6"/><rect x="178" y="104" width="4" height="6"/>
+            <rect x="254" y="118" width="4" height="6"/><rect x="332" y="108" width="4" height="6"/>
+          </g>
+          <g filter="url(#glow)">
+            <rect x="300" y="60" width="20" height="3" fill="#ff5c8a" opacity=".85"/>
+            <rect x="318" y="67" width="3" height="16" fill="#ff5c8a" opacity=".7"/>
+            <rect x="104" y="74" width="14" height="3" fill="#58e6cf" opacity=".55"/>
+          </g>
+          <rect y="158" width="400" height="22" fill="url(#wetg)"/>
+          <g stroke="#ffcc76" stroke-width="1" opacity=".16">
+            <line x1="0" y1="164" x2="400" y2="164"/>
+            <line x1="30" y1="170" x2="120" y2="170"/>
+            <line x1="210" y1="168" x2="300" y2="168"/>
+            <line x1="330" y1="174" x2="400" y2="174"/>
+          </g>
+        </svg>
+        <div class="deco-caption">
+          <span class="deco-kr">밤의 순찰</span>
+          <p id="decoText">Şehir uyumuyor; sadece sesini kısıyor.</p>
+          <span class="deco-outfit" id="decoOutfit"></span>
+        </div>
+      </div>
+    </main>
+
+    <div class="choices" id="choices"></div>
+    <div class="tears" id="tears" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============ BRİFİNG ============ -->
+  <section id="scr-brief" class="screen">
+    <header class="screen-head">
+      <div>
+        <div class="kicker" id="briefKicker">GECE 1 • 22:20</div>
+        <h2>Devriye Planı</h2>
+      </div>
+      <button class="icon-btn" id="btnBriefWardrobe" aria-label="Dolap">Dolap</button>
+    </header>
+    <div class="scroll-area brief-area">
+      <div class="case-brief" id="briefCase"></div>
+      <div class="outfit-line" id="briefOutfit"></div>
+      <p class="prompt">Bu gece hangi hattan devriye atacaksın?</p>
+      <div class="route-grid" id="routeGrid"></div>
+      <p class="fine-note">Her hat farklı olayları, farklı ayak risklerini ve farklı duygusal yükleri tetikler.</p>
+    </div>
+  </section>
+
+  <!-- ============ SABAH ============ -->
+  <section id="scr-dawn" class="screen">
+    <header class="screen-head">
+      <div>
+        <div class="kicker" id="dawnKicker">GÜN DOĞUMU • 04:52</div>
+        <h2>Vardiya Bitti</h2>
+      </div>
+      <div class="clock dawn-clock" id="dawnNight">GECE 1</div>
+    </header>
+    <div class="scroll-area dawn-area">
+      <div class="report" id="dawnReport"></div>
+      <div class="outcome-box" id="dawnOutcome"></div>
+      <p class="prompt" id="dawnPrompt">Ayakların için ne yapacaksın?</p>
+      <div class="dawn-choices" id="dawnChoices"></div>
+      <button id="btnDawnNext" class="btn primary big hidden">Dolaba geç →</button>
+      <p class="fine-note" id="dawnNote"></p>
+    </div>
+  </section>
+
+  <!-- ============ DOLAP ============ -->
+  <section id="scr-wardrobe" class="screen">
+    <header class="screen-head wardrobe-head">
+      <div>
+        <div class="kicker" id="wrKicker">GECE 1 • HAZIRLIK</div>
+        <h2>Dolap</h2>
+      </div>
+      <div class="wr-head-right">
+        <span class="wr-count" id="wrCount">34 çorap</span>
+        <button class="icon-btn" id="btnWrBack" aria-label="Geri">←</button>
+      </div>
+    </header>
+
+    <div class="wr-preview-wrap">
+      <div id="preview" class="wr-preview"></div>
+      <div class="wr-preview-info">
+        <div class="wr-look-name" id="wrLookName"></div>
+        <div class="wr-stats" id="wrStats"></div>
+      </div>
+    </div>
+
+    <div class="wr-tabs" id="wrTabs">
+      <button class="wr-tab active" data-tab="socks">Çoraplar</button>
+      <button class="wr-tab" data-tab="shoes">Ayakkabılar</button>
+    </div>
+    <div class="wr-filters" id="wrFilters"></div>
+    <div class="wr-grid" id="wrGrid"></div>
+
+    <div class="wr-footer">
+      <button id="btnStartNight" class="btn primary big">Giy ve devriyeye çık →</button>
+    </div>
+  </section>
+
+  <!-- ============ MODAL ============ -->
+  <div class="modal hidden" id="modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <header class="modal-head">
+        <h3 id="modalTitle">Günlük</h3>
+        <button class="icon-btn" id="btnModalClose" aria-label="Kapat">✕</button>
+      </header>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="content.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

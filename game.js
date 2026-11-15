@@ -451,6 +451,8 @@
     }
 
     s.minutes += 3 + rnd(6);
+    // Seçim işlendi; kayıt geri yüklenince aynı kart tekrar oynanmasın.
+    s.current = null;
     updateHUD();
     save();
 

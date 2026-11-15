@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#060810" />
+  <meta name="description" content="Gece Devriyesi: Seul'de bitmeyen, Türkçe metin tabanlı gece polisi oyunu. Park Yuna ile sonsuz vardiya." />
+  <title>Gece Devriyesi — Seul'de bitmeyen vardiya</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23060810'/%3E%3Ccircle cx='16' cy='14' r='7' fill='%23ff5f8f'/%3E%3Cpath d='M16 24v4' stroke='%236ee7f2' stroke-width='2'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="game.css" />
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <span class="ambient__glow ambient__glow--pink"></span>
+    <span class="ambient__glow ambient__glow--cyan"></span>
+    <span class="ambient__grain"></span>
+    <span class="ambient__line ambient__line--one"></span>
+    <span class="ambient__line ambient__line--two"></span>
+  </div>
+
+  <main class="stage">
+    <aside class="poster" aria-hidden="true">
+      <div class="poster__top">
+        <span class="poster__dot"></span>
+        <span>SEOUL METROPOLITAN POLICE · NIGHT UNIT 4</span>
+      </div>
+      <h1>GECE<br /><em>DEVRİYESİ</em></h1>
+      <p class="poster__lede">Siyah tayt. Ten rengi külotlu çorap. Temiz babetler. Çok dar bir duygusal eşik.</p>
+      <div class="poster__rule"></div>
+      <div class="poster__facts">
+        <div><strong>36</strong><span>çorap</span></div>
+        <div><strong>36</strong><span>ayakkabı</span></div>
+        <div><strong>4</strong><span>seçim / bölüm</span></div>
+        <div><strong>∞</strong><span>gece</span></div>
+      </div>
+      <p class="poster__foot">SON YOK.<br />SADECE ŞAFAK VAR.</p>
+      <div class="poster__stamp">PARK YUNA · 27 · GECE 4</div>
+    </aside>
+
+    <div class="device">
+      <div class="app" id="app">
+        <!-- ==================== HOME ==================== -->
+        <section class="screen screen--home is-active" id="screen-home" aria-label="Ana ekran">
+          <div class="home-hero">
+            <div class="home-art" id="homeArt" aria-hidden="true"></div>
+            <div class="home-hero__scrim"></div>
+            <div class="topbar topbar--over">
+              <div class="brand-mini"><span class="brand-mini__dot"></span> GECE 4 <span class="brand-mini__slash">/</span> SEOUL</div>
+              <button class="icon-btn icon-btn--glass" id="soundHome" type="button" aria-label="Sesi aç / kapat">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/><path class="sound-wave" d="M16 8.5c1.1 1 1.7 2.2 1.7 3.5s-.6 2.5-1.7 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="sound-wave sound-wave--two" d="M18.8 6c1.8 1.6 2.8 3.7 2.8 6s-1 4.4-2.8 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+            <div class="home-title">
+              <span class="eyebrow eyebrow--light">TÜRKÇE · METİN TABANLI · SONSUZ</span>
+              <h1>Gece<br /><em>Devriyesi</em></h1>
+              <p>Seul'de bitmeyen vardiya.</p>
+            </div>
+            <div class="home-hero__meta">
+              <span>PARK YUNA</span><span>27</span><span>GECE 4</span>
+            </div>
+          </div>
+
+          <div class="home-body">
+            <p class="lede">Siyah taytın iki beden küçük. Ten rengi külotlu çorabın hep aynı. Babetlerin temiz olmalı. Duygusal eşiğin bir kibrit çöpü kadar.</p>
+            <div class="home-facts">
+              <div><strong>36</strong><span>çorap</span></div>
+              <div><strong>36</strong><span>ayakkabı</span></div>
+              <div><strong>4</strong><span>seçim</span></div>
+              <div><strong>∞</strong><span>gece</span></div>
+            </div>
+            <button class="btn btn--primary" id="btnStart" type="button">
+              <span>Devriyeye başla</span><span class="btn__arrow">→</span>
+            </button>
+            <button class="btn btn--continue hidden" id="btnContinue" type="button">
+              <span class="btn__continue-main">Devam et</span><span class="btn__continue-meta" id="continueMeta"></span>
+            </button>
+            <div class="home-links">
+              <button class="text-btn" id="btnHomeHelp" type="button">Nasıl oynanır?</button>
+              <button class="text-btn text-btn--muted hidden" id="btnHomeReset" type="button">Kaydı sil</button>
+            </div>
+            <p class="home-note">Her bölümde 4 seçim. Her seçim başka bir yola. Bitiş yok; sadece şafak var.</p>
+            <div class="home-quote">
+              <span>“Gece 4, çıkıyor musunuz?”</span>
+              <em>Vardiya 21:00 — 05:00 · Seul</em>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== WARDROBE ==================== -->
+        <section class="screen screen--wardrobe" id="screen-wardrobe" aria-label="Gardırop">
+          <header class="shiftbar">
+            <button class="icon-btn" id="btnWardrobeHome" type="button" aria-label="Ana ekran">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.2 12 4l8 7.2V20h-5.5v-5.8h-5V20H4Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="shiftbar__mid">
+              <span class="shiftbar__kicker" id="wardrobeKicker">GECE 1 · HAZIRLIK</span>
+              <span class="shiftbar__time" id="wardrobeClock">20:40</span>
+            </div>
+            <button class="icon-btn" id="soundWardrobe" type="button" aria-label="Sesi aç / kapat">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/><path class="sound-wave" d="M16 8.5c1.1 1 1.7 2.2 1.7 3.5s-.6 2.5-1.7 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </button>
+          </header>
+
+          <div class="wardrobe-scroll" id="wardrobeScroll">
+            <div class="outfit-card">
+              <div class="outfit-preview" id="outfitPreview" aria-hidden="true"></div>
+              <div class="outfit-meta">
+                <span class="eyebrow">BUGÜNÜN ZIRHI</span>
+                <h2 id="outfitSockName">Ten Rengi Külotlu</h2>
+                <p id="outfitShoeName">Siyah Babet</p>
+                <div class="risk-chips" id="outfitChips"></div>
+                <button class="mini-btn" id="btnShuffle" type="button">Şansa bırak</button>
+              </div>
+            </div>
+
+            <div class="condition-card" id="conditionCard"></div>
+
+            <div class="tabrow" role="tablist" aria-label="Gardırop bölümü">
+              <button class="tab is-active" id="tabSocks" type="button" role="tab" aria-selected="true">Çoraplar <span>36</span></button>
+              <button class="tab" id="tabShoes" type="button" role="tab" aria-selected="false">Ayakkabılar <span>36</span></button>
+            </div>
+            <div class="filters" id="wardrobeFilters"></div>
+            <div class="item-grid" id="itemGrid"></div>
+            <p class="tiny-note">Siyah tayt her zaman üstünde: iki beden küçük, acıtıyor, çıkaramıyorsun. Sadece çorabını ve ayakkabını seçebilirsin.</p>
+          </div>
+
+          <footer class="wardrobe-footer">
+            <div class="prep-line">
+              <span class="prep-line__label">Hazırlık hakkı</span>
+              <span class="prep-tokens" id="prepTokens"></span>
+            </div>
+            <button class="btn btn--primary" id="btnGoPatrol" type="button">
+              <span>Giydim, devriyeye çık</span><span class="btn__arrow">→</span>
+            </button>
+          </footer>
+        </section>
+
+        <!-- ==================== STORY ==================== -->
+        <section class="screen screen--story" id="screen-story" aria-label="Devriye">
+          <header class="storybar">
+            <button class="pill-btn" id="btnStatus" type="button" aria-label="Durum">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <span>Durum</span>
+            </button>
+            <div class="storybar__mid">
+              <span class="storybar__day" id="storyDay">GECE 1</span>
+              <span class="storybar__clock" id="storyClock">21:00</span>
+            </div>
+            <button class="icon-btn" id="soundStory" type="button" aria-label="Sesi aç / kapat">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/><path class="sound-wave" d="M16 8.5c1.1 1 1.7 2.2 1.7 3.5s-.6 2.5-1.7 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </button>
+          </header>
+          <div class="shift-progress" aria-hidden="true"><span id="shiftProgress"></span></div>
+
+          <div class="story-scroll" id="storyScroll">
+            <div class="scene-art" id="sceneArt" aria-hidden="true"></div>
+            <div class="scene-body">
+              <div class="outcome hidden" id="outcome">
+                <span class="outcome__eyebrow">SEÇİMİN İZİ</span>
+                <p id="outcomeText"></p>
+                <div class="deltas" id="outcomeDeltas"></div>
+              </div>
+              <div class="scene-meta">
+                <span class="scene-place" id="scenePlace">Karakol · Arka Otopark</span>
+                <span class="scene-chain hidden" id="sceneChain">ZİNCİR</span>
+              </div>
+              <h2 id="sceneTitle">İlk Adım</h2>
+              <div class="scene-text" id="sceneText"></div>
+              <div class="footline" id="footline"></div>
+              <div class="scene-vitals" id="sceneVitals"></div>
+              <p class="scene-mood" id="sceneMood"></p>
+            </div>
+          </div>
+
+          <div class="choices" id="choices" role="group" aria-label="Seçimler"></div>
+          <div class="story-foot">
+            <span id="chainLabel">4 SEÇİM · HER BİRİ BAŞKA YOL</span>
+            <span>SON YOK</span>
+          </div>
+        </section>
+
+        <!-- ==================== REPORT ==================== -->
+        <section class="screen screen--report" id="screen-report" aria-label="Şafak raporu">
+          <div class="report-art" id="reportArt" aria-hidden="true"></div>
+          <div class="report-scroll">
+            <div class="report-head">
+              <span class="eyebrow">ŞAFAK 05:00 · GECE <span id="reportDay">1</span></span>
+              <h1 id="reportTitle">Şafak, Yine de Geliyor</h1>
+              <p id="reportLead"></p>
+            </div>
+            <div class="report-grid" id="reportGrid"></div>
+            <div class="report-note" id="reportNote"></div>
+            <div class="report-shoe" id="reportShoe"></div>
+          </div>
+          <div class="report-foot">
+            <button class="btn btn--primary" id="btnNextNight" type="button">
+              <span>Yeni geceye hazırlan</span><span class="btn__arrow">→</span>
+            </button>
+            <p class="tiny-note">Bu oyun bitmez. Sadece şafak gelir; sonra bir gece daha.</p>
+          </div>
+        </section>
+
+        <!-- ==================== SHEETS ==================== -->
+        <div class="sheet-scrim" id="sheetScrim" aria-hidden="true"></div>
+
+        <section class="sheet" id="sheetStatus" role="dialog" aria-modal="true" aria-labelledby="sheetStatusTitle">
+          <div class="sheet__handle"></div>
+          <div class="sheet__head">
+            <div>
+              <span class="eyebrow">GECE 4 · CANLI DURUM</span>
+              <h2 id="sheetStatusTitle">Durum</h2>
+            </div>
+            <button class="icon-btn" data-close-sheet type="button" aria-label="Kapat">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="sheet__scroll" id="statusContent"></div>
+        </section>
+
+        <section class="sheet" id="sheetHelp" role="dialog" aria-modal="true" aria-labelledby="sheetHelpTitle">
+          <div class="sheet__handle"></div>
+          <div class="sheet__head">
+            <div>
+              <span class="eyebrow">GECE 4 · KISA BRİFİNG</span>
+              <h2 id="sheetHelpTitle">Nasıl oynanır?</h2>
+            </div>
+            <button class="icon-btn" data-close-sheet type="button" aria-label="Kapat">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="sheet__scroll">
+            <div class="help-row"><span class="help-num">1</span><div><strong>Her bölümde 4 seçim var.</strong><p>Seçimlerin seni farklı olaylara götürür. Bazı seçimler zincirleme yeni bir olayı tetikler; üstteki “ZİNCİR” etiketi bunu gösterir.</p></div></div>
+            <div class="help-row"><span class="help-num">2</span><div><strong>Ayakların birer durum göstergesi.</strong><p>Islak ve kumlu ayakkabı konforunu düşürür, koku yapar. Her gece başlamadan “Sil” ve “Kurut” ile iki hazırlık hakkını kullanabilirsin.</p></div></div>
+            <div class="help-row"><span class="help-num">3</span><div><strong>Duygusal eşiğin çok dar.</strong><p>Ağlamak seni bitirmez; sadece yeni bir olayı tetikler. Sinir seviyesi düştüğünde gözyaşı olayları gelir.</p></div></div>
+            <div class="help-row"><span class="help-num">4</span><div><strong>Her gece yeni bir kombin.</strong><p>36 çorap, 36 ayakkabı. Külotlu, dizaltı, soket; babet, topuklu, bot, sneaker. Seçimlerin olayların gidişatını ve ayakkabının kaderini değiştirir.</p></div></div>
+            <div class="help-note">Oyunun sonu yok. Vardiya 05:00'te biter, rapor açılır, sonra yeni bir gece başlar. Telefon ekranı için tasarlandı; 1–4 tuşları da çalışır.</div>
+            <button class="btn btn--ghost" data-close-sheet type="button">Anladım</button>
+          </div>
+        </section>
+
+        <div class="tears" id="tears" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="data/wardrobe.js"></script>
+  <script src="data/events-a.js"></script>
+  <script src="data/events-b.js"></script>
+  <script src="data/events-c.js"></script>
+  <script src="data/events-d.js"></script>
+  <script src="data/events-proc.js"></script>
+  <script src="art.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
